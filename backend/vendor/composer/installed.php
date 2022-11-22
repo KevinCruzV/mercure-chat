@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '83557f667ef24873deb1466b2a60e37fb23ab76e',
+        'reference' => 'fbd4e7fd856083624748b83c45555d067ec1bdd9',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '83557f667ef24873deb1466b2a60e37fb23ab76e',
+            'reference' => 'fbd4e7fd856083624748b83c45555d067ec1bdd9',
             'dev_requirement' => false,
         ),
         'doctrine/annotations' => array(
@@ -181,6 +181,24 @@
             'reference' => '91aabc066d5620428120800c0eafc0411e441a62',
             'dev_requirement' => false,
         ),
+        'lcobucci/clock' => array(
+            'pretty_version' => '2.2.0',
+            'version' => '2.2.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../lcobucci/clock',
+            'aliases' => array(),
+            'reference' => 'fb533e093fd61321bfcbac08b131ce805fe183d3',
+            'dev_requirement' => false,
+        ),
+        'lcobucci/jwt' => array(
+            'pretty_version' => '4.2.1',
+            'version' => '4.2.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../lcobucci/jwt',
+            'aliases' => array(),
+            'reference' => '72ac6d807ee51a70ad376ee03a2387e8646e10f3',
+            'dev_requirement' => false,
+        ),
         'monolog/monolog' => array(
             'pretty_version' => '3.2.0',
             'version' => '3.2.0.0',
@@ -194,6 +212,18 @@
             'dev_requirement' => false,
             'replaced' => array(
                 0 => '^2.1',
+            ),
+        ),
+        'php-http/async-client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '*',
+            ),
+        ),
+        'php-http/client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '*',
             ),
         ),
         'psr/cache' => array(
@@ -241,6 +271,27 @@
                 0 => '1.0',
             ),
         ),
+        'psr/http-client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0',
+            ),
+        ),
+        'psr/link' => array(
+            'pretty_version' => '2.0.1',
+            'version' => '2.0.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/link',
+            'aliases' => array(),
+            'reference' => '84b159194ecfd7eaa472280213976e96415433f7',
+            'dev_requirement' => false,
+        ),
+        'psr/link-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0|2.0',
+            ),
+        ),
         'psr/log' => array(
             'pretty_version' => '3.0.0',
             'version' => '3.0.0.0',
@@ -262,6 +313,24 @@
             'provided' => array(
                 0 => '1.0|2.0|3.0',
             ),
+        ),
+        'sensio/framework-extra-bundle' => array(
+            'pretty_version' => 'v6.2.9',
+            'version' => '6.2.9.0',
+            'type' => 'symfony-bundle',
+            'install_path' => __DIR__ . '/../sensio/framework-extra-bundle',
+            'aliases' => array(),
+            'reference' => 'dcfac94d6bdcf95c126e8ccac2104917c7c8f135',
+            'dev_requirement' => false,
+        ),
+        'stella-maris/clock' => array(
+            'pretty_version' => '0.1.6',
+            'version' => '0.1.6.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../stella-maris/clock',
+            'aliases' => array(),
+            'reference' => 'a94228dac03c9a8411198ce8c8dacbbe99c930c3',
+            'dev_requirement' => false,
         ),
         'symfony/cache' => array(
             'pretty_version' => 'v6.1.7',
@@ -419,6 +488,30 @@
             'reference' => 'd402e86ce94bb3eb1ca3d6bb0393285c791e2b14',
             'dev_requirement' => false,
         ),
+        'symfony/http-client' => array(
+            'pretty_version' => 'v6.1.7',
+            'version' => '6.1.7.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/http-client',
+            'aliases' => array(),
+            'reference' => 'f515d066728774efb34347a87580621416ca8968',
+            'dev_requirement' => false,
+        ),
+        'symfony/http-client-contracts' => array(
+            'pretty_version' => 'v3.1.1',
+            'version' => '3.1.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/http-client-contracts',
+            'aliases' => array(),
+            'reference' => 'fd038f08c623ab5d22b26e9ba35afe8c79071800',
+            'dev_requirement' => false,
+        ),
+        'symfony/http-client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '3.0',
+            ),
+        ),
         'symfony/http-foundation' => array(
             'pretty_version' => 'v6.1.7',
             'version' => '6.1.7.0',
@@ -435,6 +528,24 @@
             'install_path' => __DIR__ . '/../symfony/http-kernel',
             'aliases' => array(),
             'reference' => '8fc1ffe753948c47a103a809cdd6a4a8458b3254',
+            'dev_requirement' => false,
+        ),
+        'symfony/mercure' => array(
+            'pretty_version' => 'v0.6.1',
+            'version' => '0.6.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/mercure',
+            'aliases' => array(),
+            'reference' => '7546092e654f9bb22e554819fb614e462075065a',
+            'dev_requirement' => false,
+        ),
+        'symfony/mercure-bundle' => array(
+            'pretty_version' => 'v0.3.5',
+            'version' => '0.3.5.0',
+            'type' => 'symfony-bundle',
+            'install_path' => __DIR__ . '/../symfony/mercure-bundle',
+            'aliases' => array(),
+            'reference' => 'fed303b571bbb58a411e02d52bebfe3b86d774ee',
             'dev_requirement' => false,
         ),
         'symfony/monolog-bridge' => array(
@@ -627,6 +738,15 @@
             'install_path' => __DIR__ . '/../symfony/var-exporter',
             'aliases' => array(),
             'reference' => 'b49350f45cebbba6e5286485264b912f2bcfc9ef',
+            'dev_requirement' => false,
+        ),
+        'symfony/web-link' => array(
+            'pretty_version' => 'v6.1.0',
+            'version' => '6.1.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/web-link',
+            'aliases' => array(),
+            'reference' => 'd6ef738f97b60d859652d92f10bf8645bca28cd6',
             'dev_requirement' => false,
         ),
         'symfony/web-profiler-bundle' => array(
