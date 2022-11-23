@@ -3,26 +3,29 @@
 namespace App\Service;
 
 use App\Entity\User;
+use Firebase\JWT\JWT;
 use Symfony\Component\HttpFoundation\Cookie;
 
 class CookieHelper
 {
+
+    private string $mercureSecret;
     private JWTHelper $JWTHelper;
 
-    /**
-     * @param JWTHelper $JWTHelper
-     */
-    public function __construct(JWTHelper $JWTHelper)
+    public function __construct(string $mercureSecret, JWTHelper $JWTHelper)
     {
+        $this->mercureSecret = $mercureSecret;
         $this->JWTHelper = $JWTHelper;
     }
 
-    public function buildCookie(User $user): string
+    public function createMercureCookie(User $user): string
     {
+        $jwt = $this->JWTHelper->createJWT($user);
+
         return Cookie::create(
             'mercureAuthorization',
-            $this->JWTHelper->createJWT($user),
-            new \DateTime('10 minutes'),
+            $jwt,
+            new \DateTime("10 minutes"),
             '/.well-known/mercure',
             'localhost',
             true,
