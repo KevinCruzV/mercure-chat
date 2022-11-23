@@ -27,6 +27,7 @@ export default function Login() {
             if (data.JWT) {
                 setLoggedUser(data.JWT);
                 navigate(from, {replace: true});
+                console.log(data)
             } else {
                 console.log(data)
             }
