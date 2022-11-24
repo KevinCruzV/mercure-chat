@@ -37,13 +37,14 @@ export default function UserList() {
         }
 
     }, [])
-
     return (
         <div>
-            <h1 className='m-5 text-center'>Ping a user</h1>
-            {userList.map((user) => (
-                <form className='w-75 mx-auto mb-3' onSubmit={handleSubmit}>
-                    <button className='btn btn-dark w-100' type='submit' value={user.id}>{user.username}</button>
+            <h1 className='m-5 text-center'> user list</h1>
+            {userList.map((user,index) => (
+               
+                <form className='w-75 mx-auto mb-3' onSubmit={handleSubmit} key={index}>
+                    <p>{user.email}</p>
+                    <button className='btn btn-dark w-100' type='submit' value={user.id}>{user.email}</button>
                 </form>
 
             ))}
