@@ -2,16 +2,20 @@
 
 namespace App\Controller;
 
-use Firebase\JWT\JWT;
+use App\Entity\User;
+use App\Service\CookieHelper;
+use App\Service\JWTHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login')]
+    /**
+     * @Route("/login", name="app_login")
+     */
     public function login(JWTHelper $helper, HubInterface $hub, CookieHelper $cookieHelper): Response
     {
         /** @var $user User */

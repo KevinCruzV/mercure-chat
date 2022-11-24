@@ -14,10 +14,20 @@ class Chat
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column]
     private ?string $Topic = null;
 
     #[ORM\OneToMany(mappedBy: 'chat_id', targetEntity: Message::class)]
     private Collection $messages;
+
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
 
     public function __construct()
     {
