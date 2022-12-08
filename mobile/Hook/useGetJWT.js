@@ -1,3 +1,5 @@
+import storeData from "../Storage/storeData";
+import {btoa} from 'react-native-quick-base64';
 
 export default function useGetJWT() {
 
@@ -12,6 +14,8 @@ export default function useGetJWT() {
                 'Authorization': `Basic ${credentials}`
             }
         })
+            .then(data => storeData(data))
             .then(data => data.json())
+            
     }
 }
