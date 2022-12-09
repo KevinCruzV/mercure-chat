@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
 import { Pressable } from "react-native";
+import useGetTopic from "../Hook/useGetTopic";
 export default function Chat() {
     const [message, setMessage] = useState([]);
 
-    //const getUserList = useGetUserList();
+    const getTopic = useGetTopic();
     // const backendPing = useBackendPing();
 
     //Envoyer un message

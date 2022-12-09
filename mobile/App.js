@@ -4,6 +4,9 @@ import EventSource from "react-native-sse";
 import CookieManager from '@react-native-cookies/cookies';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {userContext} from "../Context/UserContext";
+import UserList from "./Component/UserList";
+import Login from "./Auth/Login";
+import Chat from "./Component/Chat";
 
 
 const [loggedUser, setLoggedUser] = useContext(userContext);
@@ -52,8 +55,8 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login">
         {loggedUser ? (
           <Stack.Group>
-            <Stack.Screen name="UserList" component={UserList}/>
-            <Stack.Screen name="Profil" component={Profil}/>
+            <Stack.Screen name="UserList" component={UserList} loggedUser={loggedUser}/>
+            <Stack.Screen name="Chat" component={Chat}/>
             <Stack.Screen name="Setting" component={Setting}/>
             <Stack.Screen name="Logout" component={Logout}/>
           </Stack.Group>

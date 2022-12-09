@@ -1,9 +1,8 @@
 export default function useGetTopic() {
-    return function (topicName) {
-        return fetch(`http://localhost:1234/chat/${topicName}`, {
-            method: 'POST',
+    return function (user1,user2) {
+        return fetch(`http://localhost:1234/topic/${user1}/${user2}`, {
+            method: 'GET',
         })
             .then(data => data.json())
-            .then(data => data.message)
     }
 }
