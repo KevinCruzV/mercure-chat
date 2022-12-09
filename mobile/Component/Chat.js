@@ -6,12 +6,14 @@ export default function Chat() {
     //const getUserList = useGetUserList();
     // const backendPing = useBackendPing();
 
+    //Envoyer un message
     const handleSubmit = (e) => {
         e.preventDefault();
         const userId = e.target[0].value;
         backendPing(userId).then(data => console.log(data))
     }
 
+    // recevoir un message
     const handleMessage = (e) => {
         document.querySelector('h1').insertAdjacentHTML('afterend', '<div class="alert alert-success w-75 mx-auto">Ping !</div>');
         window.setTimeout(() => {

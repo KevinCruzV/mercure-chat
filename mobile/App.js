@@ -2,6 +2,12 @@ import React from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import EventSource from "react-native-sse";
 import CookieManager from '@react-native-cookies/cookies';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {userContext} from "../Context/UserContext";
+
+
+const [loggedUser, setLoggedUser] = useContext(userContext);
+
 
 useEffect(() => {
   // storage jwt
@@ -13,8 +19,6 @@ useEffect(() => {
   .then((cookies) => {
     console.log('CookieManager.get =>', cookies);
   });
-
-  //document.cookie = `mercureAuthorization=${jwt};Secure;SameSite=Strict`;
 
   const sse = new EventSource(url, {withCredentials: true});
   
@@ -39,17 +43,29 @@ useEffect(() => {
   }
 }, []);
 
+const Stack = createNativeStackNavigator();
 
 
 export default function App() {
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <Text>
-          Coucou
-        </Text>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        {loggedUser ? (
+          <Stack.Group>
+            <Stack.Screen name="UserList" component={UserList}/>
+            <Stack.Screen name="Profil" component={Profil}/>
+            <Stack.Screen name="Setting" component={Setting}/>
+            <Stack.Screen name="Logout" component={Logout}/>
+          </Stack.Group>
+        ) : (
+          <Stack.Group>
+            <Stack.Screen name="Login" component={Login}/>
+            <Stack.Screen name="Register" component={Register}/>
+          </Stack.Group>
+        )}
+        
+      </Stack.Navigator>
+    </NavigationContainer>  
   );
 }
 

@@ -1,4 +1,4 @@
-export default function useBackendChat() {
+export default function useGetTopic() {
     return function (topicName) {
         return fetch(`http://localhost:1234/chat/${topicName}`, {
             method: 'POST',
