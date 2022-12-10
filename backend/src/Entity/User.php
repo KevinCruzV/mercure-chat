@@ -37,9 +37,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Message::class, orphanRemoval: true)]
     private Collection $messages;
 
+    #[ORM\ManyToMany(targetEntity: Chat::class, mappedBy: 'suscribers')]
+    private Collection $chats;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->chats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,6 +146,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($message->getUserId() === $this) {
                 $message->setUserId(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): self
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats->add($chat);
+            $chat->addSuscriber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): self
+    {
+        if ($this->chats->removeElement($chat)) {
+            $chat->removeSuscriber($this);
         }
 
         return $this;
