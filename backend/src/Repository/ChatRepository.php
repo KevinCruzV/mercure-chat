@@ -55,13 +55,22 @@ class ChatRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-   public function findOneByUsers($user1, $user2): ?Chat
+   public function findOneBySuscribers($user1, $user2): ?Chat
    {
-       return $this->createQueryBuilder('c')
-           ->andWhere('c.exampleField = :val')
-           ->setParameter('val', $value)
-           ->getQuery()
-           ->getOneOrNullResult()
-       ;
+       $entityManager = $this->getEntityManager();
+
+       $query = $entityManager->createQuery(
+           'SELECT topic FROM App\Entity\Chat AS c
+            INNER JOIN chat_user AS cu 
+            ON c.id  = cu.chat_id  
+            INNER JOIN user AS u 
+            ON u.id = cu.user_id 
+            WHERE u.email = :email1 
+            AND u.email = :email2'
+
+       )->setParameter('email1', $user1)
+       ->setParameter("email2",$user2);
+
+       return $query->getResult();
    }
 }

@@ -14,7 +14,7 @@ use Symfony\Component\Mercure\Update;
 class TopicController extends AbstractController
 {
     #[Route('/message/{topic}', name: 'app_topic')]
-    public function getAllChatMessage(HubInterface $hub): JsonResponse
+    public function getAllChatMessage(HubInterface $hub): \Symfony\Component\HttpFoundation\JsonResponse
     {
 
         $update = new Update(
@@ -42,11 +42,11 @@ class TopicController extends AbstractController
 
 
     #[Route('/topic/{user1}/{user2}', name: 'app_topic')]
-    public function getTopicName(User $user1, User $user2, ChatRepository $chatRepository): JsonResponse
+    public function getTopicName($user1, $user2, ChatRepository $chatRepository): \Symfony\Component\HttpFoundation\JsonResponse
     {
 
         return $this->json(
-            ['topic' => $chatRepository->findbyUsers(user1, user2)]
+            ['topic' => $chatRepository->findOneBySuscribers($user1, $user2)]
         );
     }
 
