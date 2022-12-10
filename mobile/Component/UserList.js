@@ -2,10 +2,11 @@ import {useContext, useEffect, useState} from "react";
 import useGetUserList from "../Hook/useGetUserList";
 import useGetTopic from "../Hook/useGetTopic";
 import topicContext from "../Context/TopicContext";
-import {form} from "../assets/Styles/Styles";
-import {SafeAreaView, ScrollView, View} from "react-native";
+import {FlatList, Pressable, SafeAreaView, ScrollView, Text, TextInput, View} from "react-native";
+import text from "react-native-web/src/exports/Text";
 
-export default function UserList({navigation}, loggedUser) {
+
+export default function UserList({navigation}, jwt) {
     const [userList, setUserList] = useState([]);
     const [topic, setTopic] = useContext(topicContext);
 
@@ -15,44 +16,25 @@ export default function UserList({navigation}, loggedUser) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const userEmail = e.target[0].value;
-        GetTopic(loggedUser.email, userEmail).then(data => {
+        GetTopic(jwt.email, userEmail).then(data => {
             console.log(data)
             setTopic(data)
-            navigation.navigate('Chat')
+            navigation.navigate('Chat', {topic})
         })
 
     }
 
 
-
     useEffect(() => {
         getUserList().then(data => setUserList(data.users));
+    })
 
-        const url = new URL('http://localhost:9090/.well-known/mercure');
-        url.searchParams.append('topic', 'https://example.com/my-private-topic');
+    const _renderItem = ({ item }) =>
+        <><TextInput value={item.id}/>
+            <Pressable onPress={handleSubmit}><Text>Parler à : {item.email}</Text></Pressable></>
 
-        const eventSource = new EventSource(url, {withCredentials: true});
-        eventSource.onmessage = handleMessage;
 
-        return () => {
-            eventSource.close()
-        }
-
-    }, [])
     return (
-        <SafeAreaView>
-            <ScrollView>
-
-            {userList.map((user,index) => (
-                <View style={form.container}>
-                <form className='w-75 mx-auto mb-3' onSubmit={handleSubmit} key={index}>
-                    <p>{user.email}</p>
-                    <button className='btn btn-dark w-100' type='submit' value={user.email}>{user.email}</button>
-                </form>
-                </View>
-            ))}
-
-        </ScrollView>
-        </SafeAreaView>
-    );
+            <FlatList data={userList} renderItem={_renderItem} keyExtractor={item => item.id}/>
+    )
 }

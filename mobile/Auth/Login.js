@@ -1,9 +1,8 @@
-import {Pressable, View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView} from "react-native";
-// import {useLocation, useNavigate, navigate} from "react-router-dom";
-import React, {SetStateAction, useContext, useState} from "react";
-import {userContext} from "../Context/UserContext";
+import {View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView} from "react-native";
+import React, {useEffect, useState} from 'react';
 import useGetJWT from "../Hook/useGetJWT";
-import { form, Styles } from '../assets/Styles/Styles';
+import deviceStorage from "../Service/deviceStorage";
+
 
 
 export default function Login({navigation}){
@@ -15,7 +14,7 @@ export default function Login({navigation}){
     const [password, setPassword] = useState('');
     const [seePassword, setSeePassword] = useState(true);
     const [checkValidEmail, setCheckValidEmail] = useState(false);
-    const [loggedUser, setLoggedUser] = useContext(userContext);
+    // const [loggedUser, setLoggedUser] = useContext(userContext);
 
     const handleCheckEmail = (text) => {
         let re = /\S+@\S+\.\S+/;
@@ -64,14 +63,12 @@ export default function Login({navigation}){
         if (!checkPassowrd) {
           getJWT(email, password).then(data => {
               if (data.JWT) {
-                setLoggedUser(data.JWT);
+                deviceStorage('jwt', data.JWT)
                 navigation.navigate('UserList')
-                  console.log("home");
               } else {
                   console.log(data)
               }
           })
-          setNeedsLogin(!needsLogin);
         }
         else {
             alert(checkPassowrd);

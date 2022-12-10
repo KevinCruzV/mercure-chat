@@ -1,69 +1,50 @@
-import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import EventSource from "react-native-sse";
-import CookieManager from '@react-native-cookies/cookies';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {userContext} from "../Context/UserContext";
+import React, {useEffect, useState} from 'react';
+import NavigationContainer, {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserList from "./Component/UserList";
 import Login from "./Auth/Login";
 import Chat from "./Component/Chat";
 
 
-const [loggedUser, setLoggedUser] = useContext(userContext);
 
-
-useEffect(() => {
-  // storage jwt
-
-  const url = new URL('http://localhost:3000/.well-known/mercure');
-  url.searchParams.append('topic', 'https://example.com/my-private-topic');
-
-  CookieManager.get('http://localhost:1234')
-  .then((cookies) => {
-    console.log('CookieManager.get =>', cookies);
-  });
-
-  const sse = new EventSource(url, {withCredentials: true});
-  
-  sse.addEventListener("open", (event) => {
-    console.log("Open SSE connection.");
-  });
-
-  sse.addEventListener("message", (event) => {
-    console.log("New message event:", event.data);
-  });
-  
-  sse.addEventListener("error", (event) => {
-    if (event.type === "error") {
-      console.error("Connection error:", event.message);
-    } else if (event.type === "exception") {
-      console.error("Error:", event.message, event.error);
-    }
-  });
-
-  return () => {
-    sse.close();
-  }
-}, []);
-
-const Stack = createNativeStackNavigator();
 
 
 export default function App() {
+
+  const [jwt, setJwt] = useState('')
+
+
+  useEffect(async () => {
+    // storage jwt
+    try {
+      const value = AsyncStorage.getItem('jwt');
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+        setJwt(await value);
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log('pas de jwt dans le storage')
+    }
+
+
+  });
+  
+  const Stack = createNativeStackNavigator();
+
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        {loggedUser ? (
+      <Stack.Navigator>
+        {jwt ? (
           <Stack.Group>
-            <Stack.Screen name="UserList" component={UserList} loggedUser={loggedUser}/>
+            <Stack.Screen name="UserList" component={UserList} jwt={jwt} />
             <Stack.Screen name="Chat" component={Chat}/>
-            <Stack.Screen name="Setting" component={Setting}/>
-            <Stack.Screen name="Logout" component={Logout}/>
           </Stack.Group>
         ) : (
           <Stack.Group>
-            <Stack.Screen name="Login" component={Login}/>
-            <Stack.Screen name="Register" component={Register}/>
+            <Stack.Screen name="Login" component={Login} />
           </Stack.Group>
         )}
         
@@ -72,11 +53,5 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+

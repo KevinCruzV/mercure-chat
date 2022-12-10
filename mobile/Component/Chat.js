@@ -1,17 +1,19 @@
-import {useEffect, useState} from "react";
-import { Pressable } from "react-native";
+import React, {useEffect, useState} from 'react';
 import useGetTopic from "../Hook/useGetTopic";
+import {SafeAreaView, ScrollView} from "react-native";
+import useGetUserList from "../Hook/useGetUserList";
 export default function Chat() {
     const [message, setMessage] = useState([]);
 
     const getTopic = useGetTopic();
     // const backendPing = useBackendPing();
+    const getUserList = useGetUserList();
 
     //Envoyer un message
     const handleSubmit = (e) => {
         e.preventDefault();
         const userId = e.target[0].value;
-        backendPing(userId).then(data => console.log(data))
+        //backendPing(userId).then(data => console.log(data))
     }
 
     // recevoir un message
@@ -25,7 +27,7 @@ export default function Chat() {
     }
 
     useEffect(() => {
-        getUserList().then(data => setUserList(data.users));
+        getUserList().then(data => setMessage(data.users));
 
         const url = new URL('http://localhost:9090/.well-known/mercure');
         url.searchParams.append('topic', 'https://example.com/my-private-topic');
@@ -44,7 +46,7 @@ export default function Chat() {
             <ScrollView>
         
         <Text style="">Chat</Text>
-        {userList.map((message,index) => (
+        {message.map((message,index) => (
             <>
             <View key={index}>
             <Text>{message.email}</Text>
