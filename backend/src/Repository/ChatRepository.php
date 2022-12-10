@@ -66,7 +66,13 @@ class ChatRepository extends ServiceEntityRepository
             INNER JOIN user AS u 
             ON u.id = cu.user_id 
             WHERE u.email = :email1 
-            AND u.email = :email2'
+            UNION
+            SELECT topic FROM App\Entity\Chat AS c
+            INNER JOIN chat_user AS cu 
+            ON c.id  = cu.chat_id  
+            INNER JOIN user AS u 
+            ON u.id = cu.user_id 
+            WHERE u.email = :email2'
 
        )->setParameter('email1', $user1)
        ->setParameter("email2",$user2);
