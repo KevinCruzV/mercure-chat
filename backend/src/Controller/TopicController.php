@@ -46,7 +46,7 @@ class TopicController extends AbstractController
     {
 
         return $this->json(
-            ['topic' => $chatRepository->findbyUsers(user1, user2)]
+            ['topic' => $chatRepository->findOneBySuscribers($user1, $user2)]
         );
     }
 
