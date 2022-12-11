@@ -40,6 +40,16 @@ class ChatRepository extends ServiceEntityRepository
         }
     }
 
+    public function findOneById($value): ?Chat
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 //    /**
 //     * @return Chat[] Returns an array of Chat objects
 //     */
