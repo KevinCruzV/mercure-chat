@@ -26,6 +26,7 @@ export default function Login() {
             if (data.JWT) {
                 setUser(data.JWT);
                 navigate(from, {replace: true});
+                localStorage.setItem("token", data.JWT)
             } else {
                 console.log(data)
             }

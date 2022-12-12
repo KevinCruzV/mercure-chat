@@ -5,7 +5,6 @@ function Home() {
     console.log(useGetJWT);
     return (
         <>
-        <h1>home</h1>
         <UserList />
         </>
 

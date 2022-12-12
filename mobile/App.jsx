@@ -7,7 +7,7 @@
   const [ hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
 
-  const [text, setText] = useState('Not yet scanned')
+  const [jwt, setJwt] = useState('Not yet scanned')
 
   const askForpermission = () => {
     (async () => {
@@ -22,7 +22,7 @@
   
   const handleQrCodeScanned = ({type, data}) => {
     setScanned(true)
-    setText(data)
+    setJwt(data)
     console.log('data: ' + data + 'type: ' + type);
   }
 
@@ -37,7 +37,7 @@
     return(
       <View>
         <Text>Need Permission</Text>
-        <Button onPress={() => askForpermission() }/>
+        <Button title="Press Me" onPress={() => setHasPermission(true)}/>
       </View>
     )
   }
@@ -49,7 +49,7 @@
             onBarCodeScanned={scanned ? undefined : handleQrCodeScanned}
             style={{ height: 400, width: 400 }}/>
           </View>
-          <Text> {text} </Text>
+          <Text> {jwt} </Text>
           {scanned && <Button title='scan again' onPress={() => setScanned(false)} color='tomato' />}
         </ScrollView> 
       </SafeAreaView>

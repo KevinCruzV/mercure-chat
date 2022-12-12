@@ -1,6 +1,7 @@
 import './App.css';
 import Home from './pages/Home';
 import Chat from './pages/Chat';
+import Account from './pages/Account';
 import Login from './Auth/Login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {useEffect} from "react";
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={ <Home />} />
           <Route path="/chat" element={ <Chat />} />  
           <Route path="/login" element={ <Login />} />  
+          <Route path="/account" element={ <Account />} />  
           <Route path="*" element={ <Home />} />
         </Routes>
       </div>
