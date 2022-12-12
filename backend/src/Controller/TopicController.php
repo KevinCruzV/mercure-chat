@@ -34,18 +34,20 @@ class TopicController extends AbstractController
         );
     }
 
-        /**
-         * @throws NonUniqueResultException
-         */
-        #[Route('/chat/{topic}', name: 'app_topic_msg', methods: 'GET')]
-        public function getTopicMsg($topic, ChatRepository $chatRepository): JsonResponse
-        {
+    /**
+     * @throws NonUniqueResultException
+     */
+    #[Route('/chat/{topic}', name: 'app_topic_msg', methods: 'GET')]
+    public function getTopicMsg($topic, ChatRepository $chatRepository): JsonResponse
+    {
 
-            return $this->json(
-                [
-                'chatMsg' => $chatRepository->getAllMessagesOrderByDate($topic)
-                ]
-            );
-        }
+        return $this->json(
+            [
+            'chatMsg' => $chatRepository->getAllMessagesOrderByDate($topic),
+            'idChat' => $chatRepository->getChatIdByTopic($topic)
+            ]
+        );
+    }
+
 
 }

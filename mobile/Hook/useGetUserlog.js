@@ -3,3 +3,8 @@ export default function useGetCurrentUserEmail(jwt) {
     
     return JSON.parse(atob(jwt.split('.')[1])).email;
 }
+
+export default function useGetCurrentUserId(jwt) {
+    
+    return JSON.parse(atob(jwt.split('.')[1])).id;
+}
