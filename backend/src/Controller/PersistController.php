@@ -36,7 +36,6 @@ class PersistController extends AbstractController
 
         $message = new Message();
 
-
         $contenu = $data['contenu'];
         $chatId = $data['chat_id'];
         $dataEmail = $data['email'];
