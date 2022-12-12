@@ -19,8 +19,19 @@ class Chat
     #[ORM\Column]
     private ?string $Topic = null;
 
+    /**
+     * @param string|null $Topic
+     */
+    public function setTopic(?string $Topic): void
+    {
+        $this->Topic = $Topic;
+    }
+
     #[ORM\OneToMany(mappedBy: 'chat_id', targetEntity: Message::class)]
     private Collection $messages;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'chats')]
+    private Collection $suscribers;
 
 
     public function getId(): ?int
@@ -32,12 +43,15 @@ class Chat
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->suscribers = new ArrayCollection();
     }
 
     public function getTopic(): string
     {
         return $this->Topic;
     }
+
+
 
     /**
      * @return Collection<int, Message>
@@ -65,6 +79,30 @@ class Chat
                 $message->setChatId(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getSuscribers(): Collection
+    {
+        return $this->suscribers;
+    }
+
+    public function addSuscriber(User $suscriber): self
+    {
+        if (!$this->suscribers->contains($suscriber)) {
+            $this->suscribers->add($suscriber);
+        }
+
+        return $this;
+    }
+
+    public function removeSuscriber(User $suscriber): self
+    {
+        $this->suscribers->removeElement($suscriber);
 
         return $this;
     }

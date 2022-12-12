@@ -19,4 +19,15 @@ class UserController extends AbstractController
             ['groups' =>['main']]
         );
     }
+
+    #[Route('/user/{email}', name: 'app_users_email')]
+    public function getUsersByEmail(UserRepository $userRepository, $email): Response
+    {
+        return $this->json(
+            ['user' => $userRepository->findOneByEmail($email)],
+            200,
+            [],
+            ['groups' =>['main']]
+        );
+    }
 }
