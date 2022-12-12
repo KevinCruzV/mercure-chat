@@ -6,7 +6,7 @@ import Message from "./Message";
 import useGetChat from "../Hook/useGetChat";
 import {chat, msg} from "../assets/Styles/Styles";
 import useBackendMsg from '../Hook/useBackendMsg';
-import useGetCurrentUserId from '../Hook/useGetUserlog';
+import useGetCurrentUserId from '../Hook/useGetUserId';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Chat({navigation, route}) {

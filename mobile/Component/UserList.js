@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import useGetUserList from "../Hook/useGetUserList";
 import useGetTopic from "../Hook/useGetTopic";
 import {FlatList, Pressable, SafeAreaView, ScrollView, Text, TextInput, View} from "react-native";
-import useGetCurrentUserEmail from "../Hook/useGetUserlog";
+import useGetCurrentUserEmail from "../Hook/useGetUserEmail";
 
 
 export default function UserList({navigation, route}) {
