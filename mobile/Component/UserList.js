@@ -11,6 +11,13 @@ export default function UserList({navigation, route}) {
     const [useGetCurrentUserEmail, setCurrentUserEmail] = useState('');
     
 
+
+    useEffect(() => {
+
+        useGetUserList().then(data => setUserList(data.users));
+
+    })
+
     const handleSubmit = () => {
         const email = setCurrentUserEmail(route.params.jwt);
         // useGetTopic(email, item.email).then(data => {

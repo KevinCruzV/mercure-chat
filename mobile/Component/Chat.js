@@ -7,6 +7,7 @@ import useGetChat from "../Hook/useGetChat";
 import {chat, msg} from "../assets/Styles/Styles";
 import useBackendMsg from '../Hook/useBackendMsg';
 import useGetCurrentUserId from '../Hook/useGetUserId';
+import RNEventSource from 'react-native-event-source';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Chat({navigation, route}) {
@@ -46,16 +47,40 @@ export default function Chat({navigation, route}) {
     useEffect(() => {
     
 
-        Conversation();
+        
 
         const url = new URL('http://localhost:9090/.well-known/mercure');
-        url.searchParams.append('topic', topic);
+        url.searchParams.append('topic', 'https://example.com/my-private-topic');
 
-        const eventSource = new EventSource(url, {withCredentials: true});
-        eventSource.onmessage = handleMessage;
+        const eventSource = new RNEventSource(url, {
+            headers: {
+                Authorization: 'Bearer ' + value,
+            }
+        })
+        eventSource.addEventListener("open", (event) => {
+            console.log("Open SSE connection.");
+        });
+
+        eventSource.addEventListener("message", (event) => {
+        console.log("New message event:", event.data);
+        let data = JSON.parse(event.data)
+        setNewMessage(event.data)
+
+        });
+        
+        eventSource.addEventListener("error", (event) => {
+        if (event.type === "error") {
+            console.error("Connection error:", event.message);
+        } else if (event.type === "exception") {
+            console.error("Error:", event.message, event.error);
+        }
+        });
+
 
         return () => {
-            eventSource.close()
+            eventSource.addEventListener("close", (event) => {
+                console.log("Close SSE connection.");
+            });
         }
 
 
