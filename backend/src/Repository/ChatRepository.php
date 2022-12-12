@@ -120,4 +120,19 @@ class ChatRepository extends ServiceEntityRepository
                 ->getOneOrNullResult();
         }
 
+
+        /**
+     * @throws NonUniqueResultException
+     */
+    public function getChatIdByTopic(string $chatTopic)
+        {
+            return $this->createQueryBuilder('chat')
+                ->andWhere('chat.topic = :val')
+                ->setParameter('val', $chatTopic)
+                ->innerJoin('chat.messages', 'messages')
+                ->addSelect('id')
+                ->getQuery()
+                ->getOneOrNullResult();
+        }
+
 }

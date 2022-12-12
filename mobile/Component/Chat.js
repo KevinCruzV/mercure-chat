@@ -3,25 +3,36 @@ import useGetTopic from "../Hook/useGetTopic";
 import {Pressable, SafeAreaView, ScrollView, Text, TextInput, View} from "react-native";
 import useGetUserList from "../Hook/useGetUserList";
 import Message from "./Message";
-import useGetConversation from "../Hook/useGetMessage";
+import useGetChat from "../Hook/useGetChat";
 import {chat, msg} from "../assets/Styles/Styles";
+import useBackendMsg from '../Hook/useBackendMsg';
+import useGetCurrentUserId from '../Hook/useGetUserlog';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function Chat({navigation, route}) {
 
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
-    
+    const topic = route.params.topic;
+
+    const value = AsyncStorage.getItem('jwt'); 
+    const userid = useGetCurrentUserId(value);
 
     //Envoyer un message
     const handleSubmit = (e) => {
-        e.preventDefault();
+        useGetChat(topic).then(data => {
+            useBackendMsg(newMessage, userid, data.id);
+
+        });
+        
 
     }
 
 
     async function Conversation () {
-        useGetConversation(topic).then(data => {
+        useGetChat(topic).then(data => {
             if (data.chatMsg !== null) {
-                setMessages(data.chat.messages);
+                setMessages(data.chatMsg);
                 console.log(data);
             } else {
                 console.log('ce chat est vide');

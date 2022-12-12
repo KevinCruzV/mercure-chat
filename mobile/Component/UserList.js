@@ -5,10 +5,10 @@ import {FlatList, Pressable, SafeAreaView, ScrollView, Text, TextInput, View} fr
 import useGetCurrentUserEmail from "../Hook/useGetUserlog";
 
 
-export default function UserList({navigation}, jwt) {
+export default function UserList({navigation, route}) {
     const [userList, setUserList] = useState([]);
     const [topic, setTopic] = useState('')
-    cont [useGetCurrentUserEmail, setCurrentUserEmail] = useState('');
+    const [useGetCurrentUserEmail, setCurrentUserEmail] = useState('');
     
 
     const handleSubmit = () => {
