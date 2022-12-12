@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Chat;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -89,5 +90,34 @@ class ChatRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+
+    public function findIdByTopic($topic): ?Chat
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT id FROM App\Entity\Chat AS c
+            WHERE c.topic = :topic'
+
+        )->setParameter('topic', $topic);
+
+
+        return $query->getResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function getAllMessagesOrderByDate(string $chatTopic)
+        {
+            return $this->createQueryBuilder('chat')
+                ->andWhere('chat.topic = :val')
+                ->setParameter('val', $chatTopic)
+                ->innerJoin('chat.messages', 'messages')
+                ->addSelect('messages')
+                ->orderBy('messages.date', 'DESC')
+                ->getQuery()
+                ->getOneOrNullResult();
+        }
 
 }

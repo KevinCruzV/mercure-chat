@@ -1,9 +1,6 @@
-
 <?php
 
 namespace App\DataFixtures;
-
-
 use App\Factory\ChatFactory;
 use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;

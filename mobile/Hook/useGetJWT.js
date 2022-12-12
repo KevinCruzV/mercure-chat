@@ -1,3 +1,5 @@
+import {decode as atob, encode as btoa} from 'base-64'
+import deviceStorage from "../Service/deviceStorage";
 
 export default function useGetJWT() {
 
@@ -12,6 +14,13 @@ export default function useGetJWT() {
                 'Authorization': `Basic ${credentials}`
             }
         })
-            .then(data => data.json())
+            
+            .then(data => {
+                if (data.JWT) {
+                    deviceStorage('jwt', data.JWT)
+                } else {
+                    console.log(data)
+                }
+            })
     }
 }

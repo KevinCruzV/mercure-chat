@@ -4,6 +4,7 @@ export default function useGetUserList() {
             method: 'GET',
             mode: "cors"
         })
-            .then(data => data.json())
+            .then(data => data.json)
+            //.then(data => funct(data.users))
     }
 }

@@ -1,40 +1,35 @@
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import useGetUserList from "../Hook/useGetUserList";
 import useGetTopic from "../Hook/useGetTopic";
-import topicContext from "../Context/TopicContext";
 import {FlatList, Pressable, SafeAreaView, ScrollView, Text, TextInput, View} from "react-native";
-import text from "react-native-web/src/exports/Text";
+import useGetCurrentUserEmail from "../Hook/useGetUserlog";
 
 
 export default function UserList({navigation}, jwt) {
     const [userList, setUserList] = useState([]);
-    const [topic, setTopic] = useContext(topicContext);
+    const [topic, setTopic] = useState('')
+    cont [useGetCurrentUserEmail, setCurrentUserEmail] = useState('');
+    
 
-    const getUserList = useGetUserList();
-    const GetTopic = useGetTopic();
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const userEmail = e.target[0].value;
-        GetTopic(jwt.email, userEmail).then(data => {
+    const handleSubmit = () => {
+        const email = setCurrentUserEmail(route.params.jwt);
+        useGetTopic(email, item.email).then(data => {
             console.log(data)
             setTopic(data)
-            navigation.navigate('Chat', {topic})
         })
-
+        navigation.navigate('Chat', {
+            topic: topic
+        })
     }
 
 
-    useEffect(() => {
-        getUserList().then(data => setUserList(data.users));
-    })
-
-    const _renderItem = ({ item }) =>
-        <><TextInput value={item.id}/>
-            <Pressable onPress={handleSubmit}><Text>Parler à : {item.email}</Text></Pressable></>
-
-
     return (
-            <FlatList data={userList} renderItem={_renderItem} keyExtractor={item => item.id}/>
+        <FlatList
+            data={userList}
+            keyExtractor={(item) => item.id}
+            renderItem={({item}) => (
+                <Pressable onPress={handleSubmit}><Text>{item.email}</Text></Pressable>
+        )}
+        />
     )
 }

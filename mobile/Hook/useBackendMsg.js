@@ -1,9 +1,13 @@
+import axios from "axios";
 export default function useBackendMsg() {
-    return function (topicName) {
-        return fetch(`http://localhost:1234/chat/${topicName}`, {
-            method: 'POST',
+    return function (topicName, contenu, emailId, chatId) {
+        return axios.post(`http://localhost:1234/post-message`, {
+            body: new URLSearchParams({
+                contenu: contenu,
+                email: emailId,
+                chat_id: chatId
+            })
         })
-            .then(data => data.json())
-            .then(data => data.message)
+            .then(res => res.data)
     }
 }

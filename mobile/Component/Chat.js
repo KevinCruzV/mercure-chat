@@ -1,33 +1,42 @@
 import React, {useEffect, useState} from 'react';
 import useGetTopic from "../Hook/useGetTopic";
-import {SafeAreaView, ScrollView} from "react-native";
+import {Pressable, SafeAreaView, ScrollView, Text, TextInput, View} from "react-native";
 import useGetUserList from "../Hook/useGetUserList";
-export default function Chat() {
-    const [message, setMessage] = useState([]);
+import Message from "./Message";
+import useGetConversation from "../Hook/useGetMessage";
+import {chat, msg} from "../assets/Styles/Styles";
+export default function Chat({navigation, route}) {
 
-    const getTopic = useGetTopic();
-    // const backendPing = useBackendPing();
-    const getUserList = useGetUserList();
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
+    
 
     //Envoyer un message
     const handleSubmit = (e) => {
         e.preventDefault();
-        const userId = e.target[0].value;
-        //backendPing(userId).then(data => console.log(data))
+
     }
 
-    // recevoir un message
-    const handleMessage = (e) => {
-        document.querySelector('h1').insertAdjacentHTML('afterend', '<div class="alert alert-success w-75 mx-auto">Ping !</div>');
-        window.setTimeout(() => {
-            const $alert = document.querySelector('.alert');
-            $alert.parentNode.removeChild($alert);
-        }, 2000);
-        console.log(JSON.parse(e.data));
+
+    async function Conversation () {
+        useGetConversation(topic).then(data => {
+            if (data.chatMsg !== null) {
+                setMessages(data.chat.messages);
+                console.log(data);
+            } else {
+                console.log('ce chat est vide');
+            }
+
+        });
+
     }
+    
+
 
     useEffect(() => {
-        getUserList().then(data => setMessage(data.users));
+    
+
+        Conversation();
 
         const url = new URL('http://localhost:9090/.well-known/mercure');
         url.searchParams.append('topic', 'https://example.com/my-private-topic');
@@ -39,24 +48,39 @@ export default function Chat() {
             eventSource.close()
         }
 
+
     }, [])
+
 
     return(
         <SafeAreaView>
             <ScrollView>
-        
-        <Text style="">Chat</Text>
-        {message.map((message,index) => (
-            <>
-            <View key={index}>
-            <Text>{message.email}</Text>
-            <Text>{message.id} : {message.content}</Text>
-            </View>
-            </>
-        ))}
+                <View style={msg.messagingscreen}>
+                    <View style={[msg.messagingscreen, {paddingVertical: 15, paddingHorizontal: 10 }]}>
+                    {messages.map((message) => {
+                        if (currentUserId !== message.user.id) {
+                            return <Message fromMe={false} content={message.content} username={message.user.username}/>
+                        } else {
+                            return <Message fromMe={true} content={message.content} username={message.user.username}/>
+                        }
+                    })}
+                    </View>
 
-        </ScrollView>
-    </SafeAreaView>
+                    <View style={msg.messaginginputContainer}>
+                    <TextInput
+                        style={msg.messaginginput}
+                        value={newMessage}
+                        onChangeText={(text) => setNewMessage(text)}
+                    />
+                    <Pressable style={msg.messagingbuttonContainer} onPress={handleSubmit}>
+                        <View style={msg.textInput}>
+                        <Text>Send</Text>
+                        </View>
+                    </Pressable>
+                    </View>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     
     )
 }

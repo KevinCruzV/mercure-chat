@@ -11,8 +11,10 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 
 class PersistController extends AbstractController
@@ -26,13 +28,16 @@ class PersistController extends AbstractController
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     #[Route('/post-message', name: 'post-message', methods: "POST")]
-    public function postMessage(Request $request, EntityManagerInterface $em)
+    public function postMessage(Request $request, EntityManagerInterface $em): \Symfony\Component\HttpFoundation\JsonResponse
     {
 
         $data = json_decode($request->getContent(), true);
 
-        var_dump($data);
+
 
         $message = new Message();
 
