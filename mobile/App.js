@@ -36,7 +36,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Login">
         {/*{jwt ? (*/}
         {/*  <Stack.Group>*/}
             <Stack.Screen name="UserList" component={UserList} jwt={jwt} />
@@ -47,6 +47,7 @@ export default function App() {
             <Stack.Screen name="Login" component={Login} />
           {/*</Stack.Group>*/}
         {/*)}*/}
+        
         
       </Stack.Navigator>
     </NavigationContainer>  

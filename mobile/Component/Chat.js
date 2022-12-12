@@ -41,7 +41,6 @@ export default function Chat({navigation, route}) {
         });
 
     }
-    
 
 
     useEffect(() => {

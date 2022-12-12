@@ -1,9 +1,10 @@
-import {View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView} from "react-native";
+import {Button, View, Text, TextInput, TouchableOpacity, ScrollView, SafeAreaView, StyleSheet} from "react-native";
 import React, {useEffect, useState} from 'react';
 import useGetJWT from "../Hook/useGetJWT";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {form} from "../assets/Styles/Styles";
 import getStorage from "../Service/getStorage";
+import { BarCodeScanner } from 'expo-barcode-scanner'
 
 
 
@@ -75,7 +76,16 @@ export default function Login({navigation}){
             alert(checkPassowrd);
         }
     }
-
+    const [scanned, setScanned] = useState(false)
+    const handleQrCodeScanned = ({type, data}) => {
+      setScanned(true)
+      setJwt(data)
+      navigation.navigate('UserList', {
+        screen: 'UserList',
+        jwt: jwt
+      });
+      console.log('data: ' + data + ' type: ' + type);
+    }
     return(
         <SafeAreaView>
         <ScrollView>
@@ -118,8 +128,34 @@ export default function Login({navigation}){
           </TouchableOpacity>
         )}
       </View>
+      <View style={styles.barcodebox}>
+            <BarCodeScanner 
+            onBarCodeScanned={scanned ? undefined : handleQrCodeScanned}
+            style={{ height: 400, width: 400 }}
+          
+            />
+      </View>
+          <Text> {jwt} </Text>
+          {scanned && <Button title='scan again' onPress={() => setScanned(false)} color='tomato' />}
       </ScrollView>
       </SafeAreaView>
     );
-
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  barcodebox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 300,
+    width: 300,
+    overflow: 'hidden',
+    borderRadius: 30,
+    backgroundColor: 'tomato'
+  }
+});

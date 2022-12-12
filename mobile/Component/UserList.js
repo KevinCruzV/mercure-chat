@@ -13,10 +13,10 @@ export default function UserList({navigation, route}) {
 
     const handleSubmit = () => {
         const email = setCurrentUserEmail(route.params.jwt);
-        useGetTopic(email, item.email).then(data => {
-            console.log(data)
-            setTopic(data)
-        })
+        // useGetTopic(email, item.email).then(data => {
+        //     console.log(data)
+        //     setTopic(data)
+        // })
         navigation.navigate('Chat', {
             topic: topic
         })
