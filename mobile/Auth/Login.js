@@ -18,9 +18,6 @@ export default function Login({navigation}){
     const [checkValidEmail, setCheckValidEmail] = useState(false);
     const [jwt, setJwt] = useState('');
 
-    
-    
-    // const [loggedUser, setLoggedUser] = useContext(userContext);
 
     const handleCheckEmail = (text) => {
         let re = /\S+@\S+\.\S+/;
